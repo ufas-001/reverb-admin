@@ -16,7 +16,7 @@ const Layout = async ({ children }: LayoutProps) => {
     }
     
     return (
-        <SideBar children={children} user={session.user.email} adminId={session.user.id}/>
+        <SideBar user={session.user.email} adminId={session.user.id}>{children}</SideBar>
     )
 
 }
