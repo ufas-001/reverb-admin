@@ -1,7 +1,7 @@
 import SideBar from "@/components/Sidebar";
 import { getServerSession } from "next-auth";
 import { ReactNode } from "react";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
+import { authOptions } from "@/pages/api/auth/[...nextauth]"; 
 import { useRouter } from "next/router";
 import { notFound } from "next/navigation";
 import ChatRequest from "@/components/ChatRequest";
