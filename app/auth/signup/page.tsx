@@ -46,7 +46,6 @@ const SignUpPage = () => {
             });
             const response = await res.json();
             toast.success("User Registered!");
-            console.log({ response });
         } catch (error) {
             if (error instanceof z.ZodError) {
                 setError('email', { message: error.message })

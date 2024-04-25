@@ -34,7 +34,6 @@ const SignInPage = () => {
             setIsLoading(true)
             // Send sign-in request with credentials
             const response = await signIn("credentials", { ...validateInput, redirect: false });
-            console.log(response)
             // Check response status
             if (response?.ok) {
                 // Authentication successful, show success message

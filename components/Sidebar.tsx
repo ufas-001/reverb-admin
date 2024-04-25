@@ -70,7 +70,6 @@ const SideBar: React.FC<SideBarProps> = ({children, user, adminId}) => {
       const getPendingRequest = async () => {
         try {
           const response = await axios.get(`${BACKEND_URL}/conversation/pending`);
-          console.log("data2", response.data)
           setData(response.data);
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -100,7 +99,6 @@ const SideBar: React.FC<SideBarProps> = ({children, user, adminId}) => {
         try {
           const response = await axios.get(`${BACKEND_URL}/conversation/accepted/${adminId}`)
           setAllAcceptedReq(response.data)
-          console.log("dataAcc", response.data)
         } catch (error) {
           console.log(error)
         }
@@ -108,7 +106,6 @@ const SideBar: React.FC<SideBarProps> = ({children, user, adminId}) => {
       getAllAcceptedRequest()
       
     }, [])
-    console.log("DataSet", data)
     return ( 
         <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
