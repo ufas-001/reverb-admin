@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import io, { Socket } from "socket.io-client";
 
-const BACKEND_URL = 'http://64.226.94.169:8000';
+const BACKEND_URL = 'https://reverb.siting.xyz';
 
 const useSocket = () => {
  const [socket, setSocket] = useState<Socket | null>(null);

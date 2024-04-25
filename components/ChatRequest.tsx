@@ -37,7 +37,7 @@ const ChatRequest: React.FC <ChatRequestProps> = ({adminId}) => {
         const getPendingRequest = async () => {
             try {
                 // Fetch data from your API using Axios
-                const response = await axios.get('http://64.226.94.169:8000/conversation/pending');
+                const response = await axios.get('https://reverb.siting.xyz/conversation/pending');
                 setData(response.data);
                 console.log("resp",response.data)
             } catch (error) {
