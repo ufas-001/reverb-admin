@@ -16,8 +16,6 @@ interface PageProps {
 const Page =  ({ params }: PageProps) => {
     const { id } = params
     const [input, setInput] = useState<string>(" ")
-    const router = useRouter()
-    console.log(id)
 
     const handleContinueConversation = async () => {
         if(!input) return
@@ -26,7 +24,6 @@ const Page =  ({ params }: PageProps) => {
                     senderType: "admin", 
                     messageContent: input
             })
-            console.log("respons", response)
             setInput("")
         } catch (error) {
             toast.error("Something went wrong ...")

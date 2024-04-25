@@ -57,7 +57,7 @@ const Messages: React.FC<MessagesProps> = ({id}) => {
     }, [id, socket]);
     
     const displayMessages = messages?.reverse()
-    console.log("Re", displayMessages)
+
     return ( 
         <div
           id='messages'
