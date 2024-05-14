@@ -2,6 +2,7 @@ import SideBar from "@/components/Sidebar";
 import { getServerSession } from "next-auth";
 import { ReactNode } from "react";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
+import NSideBar from "@/components/NewSideBar";
 import { useRouter } from "next/router";
 import { notFound } from "next/navigation";
 
@@ -16,7 +17,8 @@ const Layout = async ({ children }: LayoutProps) => {
     }
     
     return (
-        <SideBar user={session.user.email} adminId={session.user.id}>{children}</SideBar>
+        // <SideBar user={session.user.email} adminId={session.user.id}>{children}</SideBar>
+        <NSideBar user={session.user.email}>{ children }</NSideBar>
     )
 
 }
