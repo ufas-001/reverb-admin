@@ -8,8 +8,10 @@ interface MessagesProps {
 }
 
 interface Messages {
-    senderType: string,
-    content: string,
+    senderType: string;
+    content: string;
+    updatedAt: string;
+    createdAt: string
 }
 
 function classNames(...classes:any) {

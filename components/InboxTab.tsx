@@ -1,8 +1,13 @@
 "use client";
 import {
+  AtSymbolIcon,
   InboxIcon,
   UserGroupIcon,
+  UserCircleIcon,
+  UsersIcon,
+  ChatBubbleBottomCenterTextIcon,
   UserIcon,
+  AdjustmentsVerticalIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import {
@@ -28,82 +33,87 @@ const Inbox: React.FC<InboxProps> = ({ numberOfReq }) => {
       icon: InboxIcon,
       href: "/dashboard",
       current: pathname === "/dashboard",
+      length: 0
+    },
+    {
+      name: "Unassigned",
+      icon: UserCircleIcon,
+      href: "/dashboard/chat-request",
+      current: pathname === "/dashboard/chat-request",
+      length: numberOfReq
+    },
+    {
+      name: "Mentions",
+      icon: AtSymbolIcon,
+      href: "#",
+      current: pathname === "/",
+      length: 0
+    },
+    {
+      name: "All",
+      icon: UsersIcon,
+      href: "#",
+      current: pathname === "/",
+      length: 0
     },
   ];
   const automationNav = [
     {
       name: "Chatbot",
-      icon: InboxIcon,
+      icon: ChatBubbleBottomCenterTextIcon,
       href: "/messages",
       current: pathname === "/messages",
     },
     {
       name: "Customization",
-      icon: UserIcon,
+      icon: AdjustmentsVerticalIcon,
       href: "/customization",
       current: pathname === "/customization",
     },
   ];
 
   return (
-    <Accordion type="single" collapsible className="w-44 ">
-      <h4 className="font-bold text-2xl pl-3 text-black pb-6">Inbox</h4>
-      <AccordionItem value="conversation" className="border-b-0">
-        <AccordionTrigger className="flex flex-row gap-x-2 text-sm flex-grow-0 hover:no-underline">
+    <Accordion type="single" defaultValue="conversation" collapsible className="w-full">
+      <h4 className="font-bold text-2xl pl-3 text-black w-full mb-4 h-[50px] flex items-center border-b border-gray-200">Inbox</h4>
+      <AccordionItem value="conversation" className="border-b-0 px-3">
+        <AccordionTrigger  className="flex flex-row gap-x-2 text-base py-2 font-medium flex-grow-0 hover:no-underline">
           Conversation
         </AccordionTrigger>
-        {conversationNav.map((item) => {
+        {conversationNav.map((item, index) => {
           return (
-            <AccordionContent className="mt-2">
+            <AccordionContent key={index} className="pb-2">
               <Link
                 href={item.href}
                 className={classNames(
                   item.current ? "text-blue-900" : "text-black",
-                  "flex gap-x-2 text-sm leading-6 font-semibold"
+                  "flex justify-between items-center text-sm leading-6 font-normal pl-1"
                 )}
               >
-                <item.icon aria-hidden="true" className="h-5 w-5 shrink-0" />
-                {item.name}
+                <span className="flex gap-x-2 items-center">
+                  <item.icon aria-hidden="true" className="h-4 w-4 font-bold shrink-0" />
+                  <span>{item.name}</span>
+                </span>
+                <span>{item.length}</span>
               </Link>
             </AccordionContent>
           );
         })}
-        <AccordionContent className="mt-2">
-          <Link
-            href="/dashboard/request"
-            className={classNames(
-              pathname === "/dashboard/request"
-                ? "text-blue-900"
-                : "text-black",
-              numberOfReq <= 0 ? "" : "px-2 pt-1",
-              "flex gap-x-2 text-sm leading-6 font-semibold relative "
-            )}
-          >
-            {numberOfReq <= 0 ? null : (
-              <span className="absolute h-5 w-5 left-0 top-[-7px] rounded-full flex items-center bg-gray-900 text-white text-[8px] justify-center">
-                {numberOfReq}
-              </span>
-            )}
-            <UserIcon aria-hidden="true" className="h-5 w-5 shrink-0" />
-            Chat Request
-          </Link>
-        </AccordionContent>
       </AccordionItem>
-      <AccordionItem value="automation" className="border-b-0">
-        <AccordionTrigger className="flex flex-row gap-x-2 text-sm flex-grow-0 hover:no-underline">
+      <AccordionItem value="automation" className="border-b-0 px-3 py-0">
+        <AccordionTrigger className="flex flex-row gap-x-2 py-2 text-base font-medium flex-grow-0 hover:no-underline">
           Automation
         </AccordionTrigger>
-        {automationNav.map((item) => {
+        {automationNav.map((item, index) => {
           return (
-            <AccordionContent className="mt-2">
+            <AccordionContent key={index} className="pb-2">
               <Link
                 href={item.href}
                 className={classNames(
                   item.current ? "text-blue-900" : "text-black",
-                  "group flex gap-x-2 rounded-md text-sm leading-6 font-semibold"
+                  "group flex gap-x-2 rounded-md text-sm leading-6 font-normal items-center pl-1"
                 )}
               >
-                <item.icon aria-hidden="true" className="h-5 w-5 shrink-0" />
+                <item.icon aria-hidden="true" className="h-4 w-4 shrink-0" />
                 {item.name}
               </Link>
             </AccordionContent>

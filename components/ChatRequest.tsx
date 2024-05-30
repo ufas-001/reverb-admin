@@ -63,7 +63,7 @@ const ChatRequest: React.FC <ChatRequestProps> = ({adminId}) => {
 
     
     return (
-        <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 pt-4">
+        <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 pt-4 px-5">
             {data?.map((data, index) => (
                 <li key={index} className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
                     <div className="flex w-full items-center justify-between space-x-6 p-6">

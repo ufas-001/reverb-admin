@@ -1,4 +1,4 @@
-"use-client";
+"use client";
 import { useState } from "react";
 import { Dialog, Switch } from "@headlessui/react";
 
@@ -10,7 +10,7 @@ const GeneralInfo = () => {
   const [automaticTimezoneEnabled, setAutomaticTimezoneEnabled] =
     useState(true);
   return (
-    <main className="px-4 py-16 sm:px-6 lg:flex-auto lg:px-16 lg:py-20">
+    <main className="px-4 py-16 sm:px-6 lg:flex-auto lg:px-20 lg:py-20">
       <div className="mx-auto max-w-2xl space-y-16 sm:space-y-20 lg:mx-0 lg:max-w-none">
         <div>
           <h2 className="text-base font-semibold leading-7 text-gray-900">

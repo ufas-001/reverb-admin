@@ -4,15 +4,14 @@ import { Fragment, ReactNode, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
   UsersIcon,
   XMarkIcon,
   Cog8ToothIcon,
   ArrowRightEndOnRectangleIcon,
+  EnvelopeIcon,
+  PaperAirplaneIcon,
+  BookOpenIcon,
+  ChartBarIcon
 } from "@heroicons/react/24/outline";
 import Inbox from "./InboxTab";
 import { usePathname } from "next/navigation";
@@ -31,26 +30,26 @@ interface NSideBarProps {
 
 const NSideBar: React.FC<NSideBarProps> = ({ children, user }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-    const pathname = usePathname();
-    const [data, setData] = useState([]);
-    const socket = useSocket();
-
+  const pathname = usePathname();
+  const [data, setData] = useState([]);
+  const socket = useSocket();
 
   const navigation = [
     {
       name: "Dashboard",
       href: "/dashboard",
-      icon: FolderIcon,
+      icon: EnvelopeIcon,
       current: pathname === "/dashboard",
     },
     {
-      name: "Team",
-      href: "/dashboard/request",
-      icon: UsersIcon,
-      current: pathname === "/dashboard/request",
+      name: "Automation",
+      href: "#",
+      icon: PaperAirplaneIcon,
+      current: pathname === "#",
     },
-    { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
-    { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
+    { name: "Calendar", href: "#", icon: UsersIcon, current: false },
+    { name: "Reports", href: "#", icon: BookOpenIcon, current: false },
+     { name: "Reports", href: "#", icon: ChartBarIcon, current: false }
   ];
   useEffect(() => {
     const getPendingRequest = async () => {
@@ -79,7 +78,7 @@ const NSideBar: React.FC<NSideBarProps> = ({ children, user }) => {
         socket.off("conversationRequest");
       }
     };
-  }, [socket]); 
+  }, [socket]);
 
   return (
     <div>
@@ -146,8 +145,8 @@ const NSideBar: React.FC<NSideBarProps> = ({ children, user }) => {
                   </div>
                   <nav className="flex flex-1 flex-col">
                     <ul role="list" className="-mx-2 flex-1 space-y-1">
-                      {navigation.map((item) => (
-                        <li key={item.name}>
+                      {navigation.map((item, index) => (
+                        <li key={index}>
                           <a
                             href={item.href}
                             className={classNames(
@@ -175,28 +174,40 @@ const NSideBar: React.FC<NSideBarProps> = ({ children, user }) => {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:flex flex-col flex-1 lg:w-20 lg:overflow-y-auto lg:bg-gray-900 lg:pb-4 h-full">
-        <div className="flex h-16 shrink-0 items-center justify-center">
+      <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:flex flex-col flex-1 lg:w-[5%] lg:overflow-y-auto lg:bg-gray-900 lg:pb-4 h-full">
+        <div className="flex h-14 shrink-0 items-center justify-center">
           <img
             className="h-8 w-auto"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
             alt="Your Company"
           />
         </div>
-        <nav className="mt-8">
+        <nav className="mt-2">
           <ul role="list" className="flex flex-col items-center space-y-1">
-            {navigation.map((item) => (
-              <li key={item.name}>
+            {navigation.map((item, index) => (
+              <li
+                key={index}
+              >
                 <a
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? "bg-gray-800 text-white"
+                      ? "text-white"
                       : "text-gray-400 hover:text-white hover:bg-gray-800",
-                    "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold"
+                    "group flex justify-center gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold "
                   )}
                 >
-                  <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
+                  {item.icon === PaperAirplaneIcon ? (
+                    <item.icon
+                      className="h-6 w-6 rotate-[-30deg] shrink-0"
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <item.icon
+                      className="h-6 w-6 shrink-0"
+                      aria-hidden="true"
+                    />
+                  )}
                   <span className="sr-only">{item.name}</span>
                 </a>
               </li>
@@ -267,16 +278,13 @@ const NSideBar: React.FC<NSideBarProps> = ({ children, user }) => {
           </span>
         </a>
       </div>
-      <div>
-        <main className="lg:pl-[304px] h-full">
-          <div className="">
-            <div className="sm:px-6 lg:px-0">{children}</div>
-          </div>
-        </main>
-
-        <aside className="fixed inset-y-0 left-20 hidden w-56 overflow-y-auto border-r border-gray-200 px-4 py-6 sm:px-6 lg:px-3 xl:block">
+      <div className="lg:pl-[5%] h-screen flex">
+        <aside className="hidden w-[20%] overflow-y-auto border-r border-gray-200  xl:block">
           <Inbox numberOfReq={data.length} />
         </aside>
+        <main className="h-full w-[80%]">
+          <div className="sm:px-6 lg:px-0 w-full">{children}</div>
+        </main>
       </div>
     </div>
   );

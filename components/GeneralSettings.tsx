@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, Switch } from "@headlessui/react";
 import { useState } from "react";
 import GeneralInfo from "./GeneralInfo";
+import ArticleLink from "./ArticleLink";
 
 const secondaryNavigation = [
   { name: "Account", href: "#", current: true },
@@ -13,8 +14,10 @@ const secondaryNavigation = [
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(" ");
 }
-
-const GeneralSettings = () => {
+interface GeneralSettingsProps {
+  adminId: number
+}
+const GeneralSettings: React.FC<GeneralSettingsProps> = ({adminId}) => {
   return (
     <Tabs defaultValue="account" className="w-full mt-10">
       <TabsList className="mx-16 bg-white px-0">
@@ -25,10 +28,10 @@ const GeneralSettings = () => {
           Account
         </TabsTrigger>
         <TabsTrigger
-          value="currentustomisation"
+          value="article-links"
           className="pr-4 data-[state=active]:bg-none data-[state=active]:shadow-none data-[state=active]:text-black"
         >
-          Customisation
+          Article Links
         </TabsTrigger>
         <TabsTrigger
           value="widget"
@@ -39,6 +42,9 @@ const GeneralSettings = () => {
       </TabsList>
       <TabsContent value="account">
         <GeneralInfo />
+      </TabsContent>
+      <TabsContent value="article-links">
+        <ArticleLink adminId={adminId}/>
       </TabsContent>
       <TabsContent value="password">Change your password here.</TabsContent>
     </Tabs>
