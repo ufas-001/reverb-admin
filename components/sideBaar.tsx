@@ -17,6 +17,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { useParams, usePathname } from "next/navigation";
 import { BACKEND_URL } from "@/lib/constant";
+import Image from "next/image";
 
 
 const teams = [
@@ -105,7 +106,7 @@ const SideBarr: React.FC<SideBarrProps> = ({children, user, adminId}) => {
       }
       getAllAcceptedRequest()
       
-    }, [])
+    }, [adminId])
     return ( 
         <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -152,8 +153,10 @@ const SideBarr: React.FC<SideBarrProps> = ({children, user, adminId}) => {
                   {/* Sidebar component, swap this element with another sidebar if you like */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2">
                     <div className="flex h-16 shrink-0 items-center">
-                      <img
+                      <Image
                         className="h-8 w-auto"
+                        width={8}
+                        height={8}
                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                         alt="Your Company"
                       />
@@ -254,8 +257,10 @@ const SideBarr: React.FC<SideBarrProps> = ({children, user, adminId}) => {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
             <div className="flex h-16 shrink-0 items-center">
-              <img
+              <Image
                 className="h-8 w-auto"
+                height={8}
+                width={8}
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                 alt="Your Company"
               />

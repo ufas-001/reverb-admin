@@ -3,7 +3,7 @@ import { Dialog, Switch } from "@headlessui/react";
 import { useState } from "react";
 import GeneralInfo from "./GeneralInfo";
 import ArticleLink from "./ArticleLink";
-
+import WidgetCustomization from "./WidgetCustomization";
 const secondaryNavigation = [
   { name: "Account", href: "#", current: true },
   { name: "Notifications", href: "#", current: false },
@@ -44,9 +44,11 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({adminId}) => {
         <GeneralInfo />
       </TabsContent>
       <TabsContent value="article-links">
-        <ArticleLink adminId={adminId}/>
+        <ArticleLink adminId={adminId} />
       </TabsContent>
-      <TabsContent value="password">Change your password here.</TabsContent>
+      <TabsContent value="widget">
+        <WidgetCustomization adminId={adminId} />
+      </TabsContent>
     </Tabs>
   );
 };

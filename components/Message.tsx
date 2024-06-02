@@ -98,7 +98,7 @@ const Message: React.FC<MessageProps> = ({ adminId }) => {
         socket.off("messageCreated");
       }
     };
-  }, [socket]);
+  }, [socket, adminId]);
 
 
   console.log("Accepted: ", allAcceptedReq);
@@ -139,14 +139,13 @@ const Message: React.FC<MessageProps> = ({ adminId }) => {
               const getFormatedTime = formatTime(list?.messages[0].updatedAt!);
 
               return (
-                <div className="px-3 pb-2 w-full">
+                <div className="px-3 pb-2 w-full" key={index}>
                   <TabsTrigger
                     value={list?.uniqueId!}
                     onClick={() => {
                       setUniqueValue(list?.uniqueId!);
                       console.log("list: ", list);
                     }}
-                    key={index}
                     className="flex flex-col justify-between items-start px-2 py-3 w-full h-[100px] rounded-md data-[state=active]:bg-gray-200 data-[state=active]:shadow-none data-[state=active]:border-2 border border-gray-200 overflow-y-auto"
                   >
                     <div className="flex flex-row items-center justify-between w-full">

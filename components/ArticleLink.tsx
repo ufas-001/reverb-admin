@@ -36,11 +36,11 @@ const ArticleLink: React.FC<CreateArticleLinkProps> = ({adminId}) => {
         const response = await axios.get(`${BACKEND_URL}/article/${adminId}`)
         setArticleLinks(response.data)
       } catch (error) {
-        
+        console.error(error)
       }
     }
     getArticleLinks()
-  }, [createArticleLink])
+  }, [createArticleLink, adminId])
   
   return (
     <div className="px-4 py-16 sm:px-6 lg:px-20 lg:py-20">
