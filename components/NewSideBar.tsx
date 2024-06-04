@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import axios from "axios";
 import { BACKEND_URL } from "@/lib/constant";
 import useSocket from "@/utils/useSocket";
+import LogoIcon from "@/public/logo.svg";
 
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(" ");
@@ -137,12 +138,8 @@ const NSideBar: React.FC<NSideBarProps> = ({ children, user }) => {
 
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-2 ring-1 ring-white/10">
                   <div className="flex h-16 shrink-0 items-center">
-                    <Image
-                      className="h-8 w-auto"
-                      height={8}
-                      width={8}
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                      alt="Your Company"
+                    <LogoIcon
+                      className="h-8 w-8"
                     />
                   </div>
                   <nav className="flex flex-1 flex-col">
@@ -178,12 +175,8 @@ const NSideBar: React.FC<NSideBarProps> = ({ children, user }) => {
       {/* Static sidebar for desktop */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:flex flex-col flex-1 lg:w-[5%] lg:overflow-y-auto lg:bg-gray-900 lg:pb-4 h-full">
         <div className="flex h-14 shrink-0 items-center justify-center">
-          <Image
-            className="h-8 w-auto"
-            height={8}
-            width={8}
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-            alt="Your Company"
+          <LogoIcon
+            className="h-8 w-8 text-white "
           />
         </div>
         <nav className="mt-2">

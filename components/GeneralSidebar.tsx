@@ -14,6 +14,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import LogoIcon from "@/public/logo.svg";
 
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(" ");
@@ -112,12 +113,8 @@ const GeneralSideBar: React.FC<GeneralSideBarProps> = ({ children }) => {
                   {/* Sidebar component, swap this element with another sidebar if you like */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 ring-1 ring-white/10">
                     <div className="flex h-16 shrink-0 items-center">
-                      <Image
-                        className="h-8 w-auto"
-                        width={8}
-                        height={8}
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                        alt="logo"
+                      <LogoIcon
+                        className="h-8 w-auto fill-white"
                       />
                     </div>
                     <nav className="flex flex-1 flex-col">
@@ -183,12 +180,8 @@ const GeneralSideBar: React.FC<GeneralSideBarProps> = ({ children }) => {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 ring-1 ring-white/5">
             <div className="flex h-16 shrink-0 items-center">
-              <Image
-                className="h-8 w-auto"
-                width={8}
-                height={8}
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
+              <LogoIcon
+                className="h-8 w-auto text-white"
               />
             </div>
             <nav className="flex flex-1 flex-col">
