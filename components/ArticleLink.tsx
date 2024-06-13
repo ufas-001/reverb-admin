@@ -15,7 +15,7 @@ const people = [
 ];
 
 interface CreateArticleLinkProps {
-  adminId: number
+  apiKey: string
 }
 
 interface ArticleLink {
@@ -27,20 +27,20 @@ interface ArticleLink {
   userId: number;
 }
 
-const ArticleLink: React.FC<CreateArticleLinkProps> = ({adminId}) => {
+const ArticleLink: React.FC<CreateArticleLinkProps> = ({apiKey}) => {
   const [createArticleLink, setCreateArticleLink] = useState(false)
   const [articleLinks, setArticleLinks] = useState<(ArticleLink | null)[]>()
   useEffect(() => {
     const getArticleLinks = async () => {
       try {
-        const response = await axios.get(`${BACKEND_URL}/article/${adminId}`)
+        const response = await axios.get(`${BACKEND_URL}/article/${apiKey}`)
         setArticleLinks(response.data)
       } catch (error) {
         console.error(error)
       }
     }
     getArticleLinks()
-  }, [createArticleLink, adminId])
+  }, [createArticleLink, apiKey])
   
   return (
     <div className="px-4 py-16 sm:px-6 lg:px-20 lg:py-20">
@@ -120,8 +120,15 @@ const ArticleLink: React.FC<CreateArticleLinkProps> = ({adminId}) => {
             </table>
           </div>
         </div>
+        {
+          (
+            (!articleLinks || articleLinks.length < 5) && (
+              <div className="text-center mt-3 font-medium text-sm text-red-600">Minimum of 5 article Links is required</div>
+            )
+          )
+        }
       </div>
-      <CreateArticleLink openCreateArticleLink={createArticleLink} setCreateArticleLink={setCreateArticleLink} adminId={adminId} />
+      <CreateArticleLink openCreateArticleLink={createArticleLink} setCreateArticleLink={setCreateArticleLink} apiKey={apiKey} />
     </div>
   );
 }

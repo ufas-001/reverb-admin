@@ -16,12 +16,12 @@ function classNames(...classes: any) {
 type FormData = z.infer<typeof articleLinkValidator>
 
 interface CreateArticleLinkProps {
-    adminId: number
+    apiKey: string
     openCreateArticleLink: boolean;
     setCreateArticleLink: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const CreateArticleLink: React.FC<CreateArticleLinkProps> = ({openCreateArticleLink, setCreateArticleLink, adminId}) => {
+const CreateArticleLink: React.FC<CreateArticleLinkProps> = ({openCreateArticleLink, setCreateArticleLink, apiKey}) => {
     const [isLoading, setIsLoading] = useState(false)
     const {
       register,
@@ -37,7 +37,7 @@ const CreateArticleLink: React.FC<CreateArticleLinkProps> = ({openCreateArticleL
         try {
             const validateInput = articleLinkValidator.parse(form)
             setIsLoading(true)
-            const response = await axios.post(`${BACKEND_URL}/article/create/${adminId}`,{...validateInput})
+            const response = await axios.post(`${BACKEND_URL}/article/${apiKey}`,{...validateInput})
             toast.success("Article link created")
             setCreateArticleLink(false)
 

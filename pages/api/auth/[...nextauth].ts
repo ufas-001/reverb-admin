@@ -54,7 +54,6 @@ export const authOptions: NextAuthOptions = {
  session: {
    strategy: "jwt",
 },
- // Ensure you have a secret for JWT encryption
  secret: process.env.NEXTAUTH_SECRET,
 };
 

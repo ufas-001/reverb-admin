@@ -49,7 +49,7 @@ const preferenceColor = [
 type FormData = z.infer<typeof preferenceValidator>;
 
 interface UpdateColorCustomizationProps {
-  adminId: number;
+  apiKey: string;
   openUpdateColorCustomization: boolean;
   setUpdateColorCustomization: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -57,7 +57,7 @@ interface UpdateColorCustomizationProps {
 const UpdateColorCustomization: React.FC<UpdateColorCustomizationProps> = ({
   openUpdateColorCustomization,
   setUpdateColorCustomization,
-  adminId,
+  apiKey,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedColor, setSelectedColor] = useState<PreferenceColor>(
@@ -77,12 +77,11 @@ const UpdateColorCustomization: React.FC<UpdateColorCustomizationProps> = ({
     try {
       setIsLoading(true);
       const response = await axios.patch(
-        `${BACKEND_URL}/preference/${adminId}`,
+        `${BACKEND_URL}/preference/${apiKey}`,
         {
           ...selectedColor,
         }
       );
-      console.log("Response", response);
       toast.success("widget color updated");
       setUpdateColorCustomization(false);
     } catch (error) {

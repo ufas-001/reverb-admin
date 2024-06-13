@@ -17,23 +17,42 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BACKEND_URL } from "@/lib/constant";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 interface InboxProps {
   numberOfReq: number;
+  adminId: number
 }
 
-const Inbox: React.FC<InboxProps> = ({ numberOfReq }) => {
+interface AcceptedRequest {
+  uniqueId: string;
+  messageContent: string;
+  accepted: boolean;
+  adminId: number;
+  messages: {
+    user: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
+  updatedAt: string;
+}
+
+const Inbox: React.FC<InboxProps> = ({ numberOfReq, adminId }) => {
   const pathname = usePathname();
+  const [acceptedReq, setAcceptedReq] = useState<(AcceptedRequest | null)[]>()
   const conversationNav = [
     {
       name: "Messages",
       icon: InboxIcon,
       href: "/dashboard",
       current: pathname === "/dashboard",
-      length: 0
+      length: acceptedReq?.length
     },
     {
       name: "Unassigned",
@@ -71,6 +90,18 @@ const Inbox: React.FC<InboxProps> = ({ numberOfReq }) => {
       current: pathname === "/customization",
     },
   ];
+
+  useEffect(() => {
+    const getAccecpetedConversation = async () => {
+      const response = await axios.get(
+        `${BACKEND_URL}/conversation/accepted/${adminId}`
+      );
+      setAcceptedReq(response.data)
+
+    }
+    getAccecpetedConversation()
+
+  }, [adminId])
 
   return (
     <Accordion type="single" defaultValue="conversation" collapsible className="w-full">

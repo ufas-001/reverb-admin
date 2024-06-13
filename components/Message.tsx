@@ -80,14 +80,13 @@ const Message: React.FC<MessageProps> = ({ adminId }) => {
         );
         setAllAcceptedReq(sortedData);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     getAllAcceptedRequest();
 
     if (socket) {
       socket.on("messageCreated", () => {
-        console.log("fetching all accepted")
         getAllAcceptedRequest();
       });
     }
@@ -100,8 +99,6 @@ const Message: React.FC<MessageProps> = ({ adminId }) => {
     };
   }, [socket, adminId]);
 
-
-  console.log("Accepted: ", allAcceptedReq);
   return (
     <div>
       <div>
@@ -122,52 +119,57 @@ const Message: React.FC<MessageProps> = ({ adminId }) => {
                 </div>
               </div>
             </div>
-            {allAcceptedReq?.map((list, index) => {
-              const getFirstTwoLetters = (str: string) => {
-                return str.substring(0, 2);
-              };
+            {!allAcceptedReq || allAcceptedReq.length < 1 ? (
+              <p className="px-3 pb-2 w-full text-sm text-center">No conversations yet</p>
+            ) : (
+              allAcceptedReq?.map((list, index) => {
+                const getFirstTwoLetters = (str: string) => {
+                  return str.substring(0, 2);
+                };
 
-              const getLastMessage = (
-                messages: { user: string; content: string }[]
-              ): string => {
-                if (messages.length === 0) {
-                  return ""; // Handle empty array case, you can adjust the return value as needed
-                }
-                const lastMessageObj = messages[0];
-                return lastMessageObj.content;
-              };
-              const getFormatedTime = formatTime(list?.messages[0].updatedAt!);
+                const getLastMessage = (
+                  messages: { user: string; content: string }[]
+                ): string => {
+                  if (messages.length === 0) {
+                    return ""; // Handle empty array case, you can adjust the return value as needed
+                  }
+                  const lastMessageObj = messages[0];
+                  return lastMessageObj.content;
+                };
+                const getFormatedTime = formatTime(
+                  list?.messages[0].updatedAt!
+                );
 
-              return (
-                <div className="px-3 pb-2 w-full" key={index}>
-                  <TabsTrigger
-                    value={list?.uniqueId!}
-                    onClick={() => {
-                      setUniqueValue(list?.uniqueId!);
-                      console.log("list: ", list);
-                    }}
-                    className="flex flex-col justify-between items-start px-2 py-3 w-full h-[100px] rounded-md data-[state=active]:bg-gray-200 data-[state=active]:shadow-none data-[state=active]:border-2 border border-gray-200 overflow-y-auto"
-                  >
-                    <div className="flex flex-row items-center justify-between w-full">
-                      <div className="flex flex-row items-center gap-x-3">
-                        <span className="flex items-center justify-center h-7 w-7 bg-gray-950 text-xs rounded-full text-white uppercase">
-                          {getFirstTwoLetters(list?.uniqueId!)}
-                        </span>
-                        <span className=" text-sm uppercase">
-                          {list?.uniqueId}
+                return (
+                  <div className="px-3 pb-2 w-full" key={index}>
+                    <TabsTrigger
+                      value={list?.uniqueId!}
+                      onClick={() => {
+                        setUniqueValue(list?.uniqueId!);
+                      }}
+                      className="flex flex-col justify-between items-start px-2 py-3 w-full h-[100px] rounded-md data-[state=active]:bg-gray-200 data-[state=active]:shadow-none data-[state=active]:border-2 border border-gray-200 overflow-y-auto"
+                    >
+                      <div className="flex flex-row items-center justify-between w-full">
+                        <div className="flex flex-row items-center gap-x-3">
+                          <span className="flex items-center justify-center h-7 w-7 bg-gray-950 text-xs rounded-full text-white uppercase">
+                            {getFirstTwoLetters(list?.uniqueId!)}
+                          </span>
+                          <span className=" text-sm uppercase">
+                            {list?.uniqueId}
+                          </span>
+                        </div>
+                        <span className="text-[12px] data-[state=active]:text-blue-500">
+                          {getFormatedTime}
                         </span>
                       </div>
-                      <span className="text-[12px] data-[state=active]:text-blue-500">
-                        {getFormatedTime}
-                      </span>
-                    </div>
-                    <p className="text-gray-500 font-normal truncate w-full text-left">
-                      {getLastMessage(list?.messages!)}
-                    </p>
-                  </TabsTrigger>
-                </div>
-              );
-            })}
+                      <p className="text-gray-500 font-normal truncate w-full text-left">
+                        {getLastMessage(list?.messages!)}
+                      </p>
+                    </TabsTrigger>
+                  </div>
+                );
+              })
+            )}
           </TabsList>
           {allAcceptedReq?.map((list, index) => {
             return (

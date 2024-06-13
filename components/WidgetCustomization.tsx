@@ -28,26 +28,36 @@ interface PreferenceColor {
   backgroundColor: string;
   textColor: string;
   bannerColor: string;
+  apiKey: string
+}
+
+interface ArticleLink {
+  id: number;
+  header: string;
+  link: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: number;
 }
 
 interface WidgetCustomizationProps {
-  adminId: number
+  apiKey: string
 }
-const WidgetCustomization: React.FC<WidgetCustomizationProps> = ({adminId}) => {
+const WidgetCustomization: React.FC<WidgetCustomizationProps> = ({apiKey}) => {
   const [updateColorCustomization, setUpdateColorCustomization] = useState(false);
   const [preferenceData, setPrefernceData] = useState<(PreferenceColor | null)>()
   
   useEffect(() => {
     const getPreferenceData = async () => {
      try {
-       const response = await axios.get(`${BACKEND_URL}/preference/${adminId}`);
+       const response = await axios.get(`${BACKEND_URL}/preference/${apiKey}`);
        setPrefernceData(response.data)
      } catch (error) {
       console.error
      }
     }
     getPreferenceData()
-  }, [adminId, updateColorCustomization])
+  }, [apiKey, updateColorCustomization])
 
   return (
     <div className="px-4 py-16 sm:px-6 lg:px-20 lg:py-20">
@@ -130,7 +140,7 @@ const WidgetCustomization: React.FC<WidgetCustomizationProps> = ({adminId}) => {
           </dl>
         </li>
       </ul>
-      <UpdateColorCustomization adminId={adminId} openUpdateColorCustomization={updateColorCustomization} setUpdateColorCustomization={setUpdateColorCustomization} />
+      <UpdateColorCustomization apiKey={apiKey} openUpdateColorCustomization={updateColorCustomization} setUpdateColorCustomization={setUpdateColorCustomization} />
     </div>
   );
 };

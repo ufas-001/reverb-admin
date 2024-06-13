@@ -101,7 +101,7 @@ const SideBarr: React.FC<SideBarrProps> = ({children, user, adminId}) => {
           const response = await axios.get(`${BACKEND_URL}/conversation/accepted/${adminId}`)
           setAllAcceptedReq(response.data)
         } catch (error) {
-          console.log(error)
+          console.error(error)
         }
       }
       getAllAcceptedRequest()

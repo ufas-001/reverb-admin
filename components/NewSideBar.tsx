@@ -27,9 +27,10 @@ function classNames(...classes: Array<string>) {
 interface NSideBarProps {
   children: ReactNode;
   user: string;
+  adminId: number
 }
 
-const NSideBar: React.FC<NSideBarProps> = ({ children, user }) => {
+const NSideBar: React.FC<NSideBarProps> = ({ children, user, adminId }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const [data, setData] = useState([]);
@@ -277,7 +278,7 @@ const NSideBar: React.FC<NSideBarProps> = ({ children, user }) => {
       </div>
       <div className="lg:pl-[5%] h-screen flex">
         <aside className="hidden w-[20%] overflow-y-auto border-r border-gray-200  xl:block">
-          <Inbox numberOfReq={data.length} />
+          <Inbox numberOfReq={data.length} adminId={adminId} />
         </aside>
         <main className="h-full w-[80%]">
           <div className="sm:px-6 lg:px-0 w-full">{children}</div>

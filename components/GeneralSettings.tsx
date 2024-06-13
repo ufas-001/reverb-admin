@@ -1,9 +1,13 @@
+"use client"
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, Switch } from "@headlessui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GeneralInfo from "./GeneralInfo";
 import ArticleLink from "./ArticleLink";
 import WidgetCustomization from "./WidgetCustomization";
+import { BACKEND_URL } from "@/lib/constant";
+import axios from "axios";
 const secondaryNavigation = [
   { name: "Account", href: "#", current: true },
   { name: "Notifications", href: "#", current: false },
@@ -15,9 +19,43 @@ function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(" ");
 }
 interface GeneralSettingsProps {
-  adminId: number
+  adminId: number;
+  token: string
 }
-const GeneralSettings: React.FC<GeneralSettingsProps> = ({adminId}) => {
+
+interface ApiKey {
+  id: number;
+  key: string;
+  userId: number;
+  createdAt: string;
+}
+
+interface User {
+  apiKey: ApiKey;
+  email: string;
+  id: number;
+  name: string;
+  password: string;
+}
+
+const GeneralSettings: React.FC<GeneralSettingsProps> = ({adminId, token}) => {
+  const [userInfo, setUserInfo] = useState<User | null>();
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/user/${adminId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUserInfo(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getUserInfo();
+  }, [adminId, token]);
   return (
     <Tabs defaultValue="account" className="w-full mt-10">
       <TabsList className="mx-16 bg-white px-0">
@@ -41,13 +79,13 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({adminId}) => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="account">
-        <GeneralInfo />
+        <GeneralInfo id={adminId} token={token} />
       </TabsContent>
       <TabsContent value="article-links">
-        <ArticleLink adminId={adminId} />
+        <ArticleLink apiKey={userInfo?.apiKey.key!} />
       </TabsContent>
       <TabsContent value="widget">
-        <WidgetCustomization adminId={adminId} />
+        <WidgetCustomization apiKey={userInfo?.apiKey.key!} />
       </TabsContent>
     </Tabs>
   );
