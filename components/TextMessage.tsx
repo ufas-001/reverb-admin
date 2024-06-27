@@ -90,7 +90,6 @@ const TextMessage: React.FC<TextMessageProps> = ({ id }) => {
     }
   };
 
-  const displayMessages = messages?.reverse();
   const conversationId = id
 
  useEffect(() => {
@@ -154,6 +153,9 @@ const TextMessage: React.FC<TextMessageProps> = ({ id }) => {
       setTyping(true);
     }
   };
+
+  const displayMessages = messages;
+  console.log("Display", displayMessages);
 
   return (
     <div className="flex flex-col pb-12 px-4">

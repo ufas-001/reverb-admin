@@ -64,7 +64,7 @@ const ChatRequest: React.FC <ChatRequestProps> = ({adminId}) => {
     
     return (
       <div>
-        {!chatReuest || chatReuest.length < 1 ? (
+        {(!chatReuest || chatReuest.length < 1)? (
           <div className="pt-36 text-center">
             <p>No pending conversation request</p>
           </div>
