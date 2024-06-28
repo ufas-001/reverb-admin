@@ -165,6 +165,11 @@ const TextMessage: React.FC<TextMessageProps> = ({ id }) => {
         className="flex flex-col-reverse gap-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch h-[calc(100vh-20rem)]"
       >
         <div className="flex flex-col-reverse gap-y-4">
+          {otherUserTyping && (
+            <div className="flex justify-start items-center">
+              <Typing />
+            </div>
+          )}
           {displayMessages?.map((message, index) => {
             return (
               <div
@@ -195,11 +200,6 @@ const TextMessage: React.FC<TextMessageProps> = ({ id }) => {
               </div>
             );
           })}
-          {otherUserTyping && (
-            <div className="flex justify-start items-center">
-              <Typing />
-            </div>
-          )}
         </div>
       </div>
       <div className="mt-2 flex flex-col gap-y-3">
