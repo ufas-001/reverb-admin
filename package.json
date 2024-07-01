@@ -28,6 +28,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.44.3",
     "react-hot-toast": "^2.4.1",
+    "react-spinners": "^0.14.1",
     "react-textarea-autosize": "^8.5.3",
     "socket.io-client": "^4.7.5",
     "tailwind-merge": "^2.2.2",

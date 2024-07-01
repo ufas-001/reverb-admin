@@ -8,6 +8,7 @@ import ArticleLink from "./ArticleLink";
 import WidgetCustomization from "./WidgetCustomization";
 import { BACKEND_URL } from "@/lib/constant";
 import axios from "axios";
+import Loading from "./Loader/Loading";
 const secondaryNavigation = [
   { name: "Account", href: "#", current: true },
   { name: "Notifications", href: "#", current: false },
@@ -38,12 +39,17 @@ interface User {
   password: string;
 }
 
-const GeneralSettings: React.FC<GeneralSettingsProps> = ({adminId, token}) => {
-  const [userInfo, setUserInfo] = useState<User | null>();
+const GeneralSettings: React.FC<GeneralSettingsProps> = ({
+  adminId,
+  token,
+}) => {
+  const [userInfo, setUserInfo] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const getUserInfo = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`${BACKEND_URL}/user/${adminId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,10 +58,17 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({adminId, token}) => {
         setUserInfo(response.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     getUserInfo();
   }, [adminId, token]);
+
+  if (loading) {
+    return <Loading loading={loading} />;
+  }
+
   return (
     <Tabs defaultValue="account" className="w-full mt-10">
       <TabsList className="mx-16 bg-white px-0">

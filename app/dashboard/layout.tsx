@@ -1,10 +1,12 @@
 import SideBar from "@/components/Sidebar";
-import { getServerSession } from "next-auth";
+import { getServerSession} from "next-auth";
 import { ReactNode } from "react";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import NSideBar from "@/components/NewSideBar";
 import { useRouter } from "next/router";
 import { notFound } from "next/navigation";
+import { signOut } from "next-auth/react";
+import ClientSideCheck from "@/components/ClientSideCheck";
 
 interface LayoutProps {
     children: ReactNode
@@ -17,9 +19,12 @@ const Layout = async ({ children }: LayoutProps) => {
     }
     
     return (
-        // <SideBar user={session.user.email} adminId={session.user.id}>{children}</SideBar>
-        <NSideBar adminId={session.user.id} user={session.user.email}>{ children }</NSideBar>
-    )
+      <ClientSideCheck>
+        <NSideBar adminId={session.user.id} user={session.user.email}>
+          {children}
+        </NSideBar>
+      </ClientSideCheck>
+    );
 
 }
 

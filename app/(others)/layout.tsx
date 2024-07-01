@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { ReactNode } from "react";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import GeneralSideBar from "@/components/GeneralSidebar";
+import ClientSideCheck from "@/components/ClientSideCheck";
 import NSideBar from "@/components/NewSideBar";
 import { useRouter } from "next/router";
 import { notFound } from "next/navigation";
@@ -18,9 +19,10 @@ const Layout = async ({ children }: LayoutProps) => {
     }
     
     return (
-        // <SideBar user={session.user.email} adminId={session.user.id}>{children}</SideBar>
-        <GeneralSideBar >{ children }</GeneralSideBar>
-    )
+      <ClientSideCheck>
+        <GeneralSideBar>{children}</GeneralSideBar>
+      </ClientSideCheck>
+    );
 
 }
 

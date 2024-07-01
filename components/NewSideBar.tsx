@@ -19,6 +19,7 @@ import axios from "axios";
 import { BACKEND_URL } from "@/lib/constant";
 import useSocket from "@/utils/useSocket";
 import LogoIcon from "@/public/logo.svg";
+import { signOut } from "next-auth/react";
 
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(" ");
@@ -27,14 +28,18 @@ function classNames(...classes: Array<string>) {
 interface NSideBarProps {
   children: ReactNode;
   user: string;
-  adminId: number
+  adminId: number;
 }
 
-const NSideBar: React.FC<NSideBarProps> = ({ children, user, adminId }) => {
+const NSideBar: React.FC<NSideBarProps> = ({ children, user, adminId}) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const [data, setData] = useState([]);
   const socket = useSocket();
+
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: "/auth/login" });
+  };
 
   const navigation = [
     {
@@ -139,9 +144,7 @@ const NSideBar: React.FC<NSideBarProps> = ({ children, user, adminId }) => {
 
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-2 ring-1 ring-white/10">
                   <div className="flex h-16 shrink-0 items-center">
-                    <LogoIcon
-                      className="h-8 w-8"
-                    />
+                    <LogoIcon className="h-8 w-8" />
                   </div>
                   <nav className="flex flex-1 flex-col">
                     <ul role="list" className="-mx-2 flex-1 space-y-1">
@@ -176,16 +179,12 @@ const NSideBar: React.FC<NSideBarProps> = ({ children, user, adminId }) => {
       {/* Static sidebar for desktop */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:flex flex-col flex-1 lg:w-[5%] lg:overflow-y-auto lg:bg-gray-900 lg:pb-4 h-full">
         <div className="flex h-14 shrink-0 items-center justify-center">
-          <LogoIcon
-            className="h-8 w-8 text-white "
-          />
+          <LogoIcon className="h-8 w-8 text-white " />
         </div>
         <nav className="mt-2">
           <ul role="list" className="flex flex-col items-center space-y-1">
             {navigation.map((item, index) => (
-              <li
-                key={index}
-              >
+              <li key={index}>
                 <a
                   href={item.href}
                   className={classNames(
@@ -239,8 +238,8 @@ const NSideBar: React.FC<NSideBarProps> = ({ children, user, adminId }) => {
             <Cog8ToothIcon className="h-6 w-6 shrink-0" aria-hidden="true" />
             <span className="sr-only">Settings</span>
           </a>
-          <a
-            href="#"
+          <button
+            onClick={handleSignOut}
             className={classNames(
               pathname === "#"
                 ? "bg-gray-800 text-white"
@@ -253,7 +252,7 @@ const NSideBar: React.FC<NSideBarProps> = ({ children, user, adminId }) => {
               aria-hidden="true"
             />
             <span className="sr-only">Logout</span>
-          </a>
+          </button>
         </div>
       </div>
 

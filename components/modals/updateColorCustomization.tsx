@@ -30,20 +30,20 @@ interface PreferenceColor {
 
 const preferenceColor = [
   {
-    backgroundColor: "blue",
-    textColor: "white",
-    bannerColor: "ligt-blue",
+    backgroundColor: "gray",
+    textColor: "gray",
+    bannerColor: "light-gray",
+  },
+  {
+    backgroundColor: "dark-gray",
+    textColor: "gray",
+    bannerColor: "ligt-gray",
   },
   {
     backgroundColor: "black",
     textColor: "white",
     bannerColor: "black",
-  },
-  {
-    backgroundColor: "red",
-    textColor: "white",
-    bannerColor: "light-red",
-  },
+  }
 ];
 
 type FormData = z.infer<typeof preferenceValidator>;
