@@ -28,7 +28,7 @@ function classNames(...classes: Array<string>) {
 interface NSideBarProps {
   children: ReactNode;
   user: string;
-  adminId: number;
+  adminId: string;
 }
 
 const NSideBar: React.FC<NSideBarProps> = ({ children, user, adminId}) => {

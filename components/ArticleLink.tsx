@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CreateArticleLink from "./modals/createArticleLink";
 import axios from "axios";
 import { BACKEND_URL } from "@/lib/constant";
+import DeleteArticleLink from "./modals/deletArticleLink";
 
 const people = [
   {
@@ -19,17 +20,23 @@ interface CreateArticleLinkProps {
 }
 
 interface ArticleLink {
-  id: number;
+  id: string;
   header: string;
   link: string;
   createdAt: Date;
   updatedAt: Date;
-  userId: number;
+  userId: string;
 }
 
 const ArticleLink: React.FC<CreateArticleLinkProps> = ({apiKey}) => {
   const [createArticleLink, setCreateArticleLink] = useState(false)
+  const [deleteArticleLink, setDeleteArticleLink] = useState(false)
   const [articleLinks, setArticleLinks] = useState<(ArticleLink | null)[]>()
+  const [articleId, setArticleId] = useState<string>("")
+  
+  const handleArticleId = (id: string) =>{
+    setArticleId(id)
+  }
   useEffect(() => {
     const getArticleLinks = async () => {
       try {
@@ -99,20 +106,21 @@ const ArticleLink: React.FC<CreateArticleLinkProps> = ({apiKey}) => {
                       {article?.link}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <a
-                        href="#"
-                        className="text-gray-700 hover:text-gray-950"
-                      >
+                      <a href="#" className="text-gray-700 hover:text-gray-950">
                         Edit<span className="sr-only">, edit</span>
                       </a>
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-1">
-                      <a
-                        href="#"
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleArticleId(article?.id!);
+                          setDeleteArticleLink(true);
+                        }}
                         className="text-red-400 hover:text-red-700"
                       >
                         delete<span className="sr-only">, delete</span>
-                      </a>
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -120,15 +128,23 @@ const ArticleLink: React.FC<CreateArticleLinkProps> = ({apiKey}) => {
             </table>
           </div>
         </div>
-        {
-          (
-            (!articleLinks || articleLinks.length < 5) && (
-              <div className="text-center mt-3 font-medium text-sm text-red-600">Minimum of 5 article Links is required</div>
-            )
-          )
-        }
+        {(!articleLinks || articleLinks.length < 5) && (
+          <div className="text-center mt-3 font-medium text-sm text-red-600">
+            Minimum of 5 article Links is required
+          </div>
+        )}
       </div>
-      <CreateArticleLink openCreateArticleLink={createArticleLink} setCreateArticleLink={setCreateArticleLink} apiKey={apiKey} />
+      <CreateArticleLink
+        openCreateArticleLink={createArticleLink}
+        setCreateArticleLink={setCreateArticleLink}
+        apiKey={apiKey}
+      />
+      <DeleteArticleLink
+        openDeleteArticleLink={deleteArticleLink}
+        setDeleteArticleLink={setDeleteArticleLink}
+        apiKey={apiKey}
+        id={articleId}
+      />
     </div>
   );
 }

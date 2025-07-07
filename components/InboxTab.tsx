@@ -26,14 +26,14 @@ function classNames(...classes: any) {
 }
 interface InboxProps {
   numberOfReq: number;
-  adminId: number
+  adminId: string
 }
 
 interface AcceptedRequest {
   uniqueId: string;
   messageContent: string;
   accepted: boolean;
-  adminId: number;
+  adminId: string;
   messages: {
     user: string;
     content: string;
@@ -86,8 +86,8 @@ const Inbox: React.FC<InboxProps> = ({ numberOfReq, adminId }) => {
     {
       name: "Customization",
       icon: AdjustmentsVerticalIcon,
-      href: "/customization",
-      current: pathname === "/customization",
+      href: "/dashboard/automation",
+      current: pathname === "/dashboard/automation",
     },
   ];
 

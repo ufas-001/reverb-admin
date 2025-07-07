@@ -32,12 +32,12 @@ interface PreferenceColor {
 }
 
 interface ArticleLink {
-  id: number;
+  id: string;
   header: string;
   link: string;
   createdAt: Date;
   updatedAt: Date;
-  userId: number;
+  userId: string;
 }
 
 interface WidgetCustomizationProps {

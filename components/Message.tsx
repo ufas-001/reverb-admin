@@ -35,7 +35,7 @@ interface AcceptedRequest {
   uniqueId: string;
   messageContent: string;
   accepted: boolean;
-  adminId: number;
+  adminId: string;
   messages: {
     user: string;
     content: string;
@@ -51,7 +51,7 @@ interface Messages {
 }
 
 interface MessageProps {
-  adminId: number;
+  adminId: string;
 }
 
 const Message: React.FC<MessageProps> = ({ adminId }) => {

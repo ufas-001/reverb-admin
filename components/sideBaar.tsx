@@ -33,20 +33,20 @@ function classNames(...classes:any) {
 interface SideBarrProps {
     children: ReactNode
     user: string
-    adminId: number
+    adminId: string
 }
 
 interface ChatUser {
-  id: number;
+  id: string;
   uniqueId: string;
   createdAt: string; // Assuming createdAt is represented as a string
 }
 
 interface Conversation {
-  id: number;
-  adminId: number | null;
+  id: string;
+  adminId: string | null;
   createdAt: string; // Assuming createdAt is represented as a string
-  chatUserId: number;
+  chatUserId: string;
   chatUser: ChatUser;
 }
 
@@ -54,7 +54,7 @@ interface AccpetdRquest {
   uniqueId: string;
   messageContent: string;
   accepted: Boolean;
-  adminId: number
+  adminId: string
 }
  
 const SideBarr: React.FC<SideBarrProps> = ({children, user, adminId}) => {

@@ -10,20 +10,20 @@ function classNames(...classes: Array<string>) {
 
 interface GeneralInfoProps {
   token: string;
-  id: number;
+  id: string;
 }
 
 interface ApiKey {
-  id: number;
+  id: string;
   key: string;
-  userId: number;
+  userId: string;
   createdAt: string;
 }
 
 interface User {
   apiKey: ApiKey;
   email: string;
-  id: number;
+  id: string;
   name: string;
   password: string;
 }

@@ -13,7 +13,7 @@ interface Conversation {
 }
 
 interface ChatRequestProps {
-    adminId: number
+    adminId: string
 }
 
 const people = [
